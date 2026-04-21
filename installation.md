@@ -11,11 +11,13 @@ npx shadcn@latest add --all
 Prisma ve PostgreSQL için gerekli paketleri adım adım kurun:
 
 1. Geliştirme bağımlılıklarını yükleyin:
+
    ```bash
    npm install prisma tsx @types/pg --save-dev
    ```
 
 2. Çalışma zamanı bağımlılıklarını yükleyin:
+
    ```bash
    npm install @prisma/client @prisma/adapter-pg dotenv pg
    ```
@@ -30,7 +32,15 @@ Prisma ve PostgreSQL için gerekli paketleri adım adım kurun:
    npx prisma migrate dev
    npx prisma migreate reset ``Herşeyi siler`
    ```
-   
+
+# TRPC Kurulumu
+
+TRPC için gerekli kurulumlar
+
+1. Geliştirme bağımlılıklarını yükleyin:
+   ```bash
+   npm install @trpc/server @trpc/client @trpc/tanstack-react-query @tanstack/react-query@latest zod client-only server-only
+   ```
 
 ## Not
 
