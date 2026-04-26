@@ -1,8 +1,11 @@
+import { LoginForm } from "@/app/features/auth/components/login-form"
 
 
 function Page() {
   return (
-    <div>Login</div>
+    <div>
+      <LoginForm />
+    </div>
   )
 }
 

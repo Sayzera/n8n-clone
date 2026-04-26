@@ -29,25 +29,31 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { formMessages } from "@/constants/form/messages";
 
-const loginSchema = z.object({
+const registerSchema = z.object({
   email: z.email(formMessages.emailValid),
   password: z.string().min(1, formMessages.required),
-});
+  confirmPassword: z.string()
+})
+.refine((data) => data.password === data.confirmPassword, {
+  message: formMessages.passwordsDontMatch,
+  path: ['confirmPassword']
+})
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
-export function LoginForm() {
+export function RegisterForm() {
   const router = useRouter();
 
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  const onSubmit = async (values: LoginFormValues) => {
+  const onSubmit = async (values: RegisterFormValues) => {
     console.log(values);
   };
 
@@ -57,8 +63,8 @@ export function LoginForm() {
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle>Tekrar Hoş geldiniz</CardTitle>
-          <CardDescription>Giriş yap ve devam et</CardDescription>
+          <CardTitle>Hadi başlayalım!</CardTitle>
+          <CardDescription>Kayıt ol ve devam et</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -113,6 +119,28 @@ export function LoginForm() {
                         aria-invalid={fieldState.invalid}
                         placeholder="********"
                         autoComplete="off"
+                        type="password"
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+<Controller
+                  name='confirmPassword'
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor={field.name}>Tekrar Şifre</FieldLabel>
+                      <Input
+                        {...field}
+                        id={field.name}
+                        aria-invalid={fieldState.invalid}
+                        placeholder="********"
+                        autoComplete="off"
+                        type="password"
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -123,13 +151,13 @@ export function LoginForm() {
               </div>
 
               <Button type="submit" className="w-full" disabled={isPending}>
-                Giriş Yap
+               Kayıt ol
               </Button>
 
               <div className="text-center text-sm">
-                Bir hesabım yok?{" "}
-                <Link href={"/signup"} className="underline underline-offset-4">
-                  Kayıt Ol
+                Zaten bir hesabım var{" "}
+                <Link href={"/login"} className="underline underline-offset-4">
+                 Giriş Yap
                 </Link>
               </div>
             </div>
