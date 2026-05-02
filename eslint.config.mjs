@@ -1,14 +1,69 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import importPlugin from "eslint-plugin-import";
 
 const eslintConfig = defineConfig([
 
   ...nextVitals,
   ...nextTs,
   {
+    plugins: {
+      import: importPlugin
+    },
     rules: {
       "@typescript-eslint/no-unused-vars": "off",
+      "import/order": [
+        "error",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "object",
+            "type",
+          ],
+          pathGroups: [
+            {
+              pattern: "react",
+              group: "external",
+              position: "before",
+            },
+            {
+              pattern: "react-{*,**/*}",
+              group: "external",
+              position: "before",
+            },
+            // İsterseniz Next'i React’tan hemen sonra:
+            {
+              pattern: "next",
+              group: "external",
+              position: "after",
+            },
+            {
+              pattern: "next/{*,**/*}",
+              group: "external",
+              position: "after",
+            },
+            // Proje alias/@ içi:
+            {
+              pattern: "@/**",
+              group: "internal",
+              position: "after",
+            },
+          ],
+          pathGroupsExcludedImportTypes: ["builtin", "object", "type"],
+          distinctGroup: false,
+          "newlines-between": "always",
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ],
     },
   },
 

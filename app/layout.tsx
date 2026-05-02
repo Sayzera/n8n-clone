@@ -1,8 +1,12 @@
-import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
+
 import "./globals.css";
+
+import { cn } from "@/lib/utils"
 import { TRPCReactProvider } from "@/trpc/client";
-import { cn } from "@/lib/utils";
+
+import type { Metadata } from "next";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -30,9 +34,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", geist.variable)}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <TRPCReactProvider>
+          {children}
+          <Toaster />  
+        </TRPCReactProvider>
       </body>
     </html>
   );

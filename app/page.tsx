@@ -1,9 +1,14 @@
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { Client } from "./client";
-import { getQueryClient, trpc } from "@/trpc/server";
 import { Suspense } from "react";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-const Page = () => {
+import { requireAuth } from "@/lib/auth-utils";
+import { getQueryClient, trpc } from "@/trpc/server";
+
+import { Client } from "./client";
+
+
+const Page = async () => {
+  await requireAuth()
   const queryClient = getQueryClient();
 
   // Sorguyu çalıştır react query cachine koy
@@ -16,7 +21,6 @@ const Page = () => {
 
   return (
     <div className="text-red-500">
-      Hello world
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<p>Yükleniyor</p>}>
         <Client />
