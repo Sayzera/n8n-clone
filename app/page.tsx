@@ -1,31 +1,37 @@
-import { Suspense } from "react";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+"use client";
 
-import { requireAuth } from "@/lib/auth-utils";
-import { getQueryClient, trpc } from "@/trpc/server";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
-import { Client } from "./client";
+import { Button } from "@/components/ui/button";
+import { useTRPC } from "@/trpc/client";
 
+const Page = () => {
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  const { data } = useQuery(trpc.getWorkflows.queryOptions());
 
-const Page = async () => {
-  await requireAuth()
-  const queryClient = getQueryClient();
+  const create = useMutation(
+    trpc.createWorkFlow.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries(trpc.getWorkflows.queryOptions());
 
-  // Sorguyu çalıştır react query cachine koy
-  void queryClient.prefetchQuery(trpc.getUsers.queryOptions())
-
-
-  // HydrationBoundary yukarıda sonucu alır react query önbelleğine yazar 
-
-
-
+        toast.success("Job queued");
+      },
+      onError: () => {},
+    }),
+  );
   return (
-    <div className="text-red-500">
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Suspense fallback={<p>Yükleniyor</p>}>
-        <Client />
-        </Suspense>
-      </HydrationBoundary>
+    <div className="min-h-screen min-w-screen flex items-center justify-center flex-col gap-y-6">
+      protected server componet
+      {JSON.stringify(data, null, 2)}
+      <Button
+        onClick={() => {
+          create.mutate();
+        }}
+      >
+        Create Workflow
+      </Button>
     </div>
   );
 };
