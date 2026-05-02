@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { z } from "zod";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -80,12 +81,13 @@ export function RegisterForm() {
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
-                <Button
+              <Button
                   variant={"outline"}
                   className="w-full"
                   type="button"
                   disabled={isPending}
                 >
+                  <Image src={'/logos/github.svg'} width={20} height={20} alt="Niltek yazılım github ile giriş yap butonu" />
                   Github ile devam et
                 </Button>
                 <Button
@@ -94,6 +96,7 @@ export function RegisterForm() {
                   type="button"
                   disabled={isPending}
                 >
+                  <Image src={'/logos/google.svg'} width={20} height={20} alt="Niltek yazılım google ile giriş yap butonu" />
                   Google ile devam et
                 </Button>
               </div>

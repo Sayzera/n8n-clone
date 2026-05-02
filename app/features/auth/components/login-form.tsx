@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { z } from "zod";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -15,11 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Field,
-  FieldError,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { formMessages } from "@/constants/form/messages";
 import { authClient } from "@/lib/auth-client";
@@ -51,12 +48,11 @@ export function LoginForm() {
       },
       {
         onSuccess: () => {
-          router.push('/')
-
+          router.push("/");
         },
         onError: (ctx) => {
-            toast.error(ctx.error.message)
-        }
+          toast.error(ctx.error.message);
+        },
       },
     );
   };
@@ -80,6 +76,12 @@ export function LoginForm() {
                   type="button"
                   disabled={isPending}
                 >
+                  <Image
+                    src={"/logos/github.svg"}
+                    width={20}
+                    height={20}
+                    alt={`${process.env.NEXT_PUBLIC_COMPANY_NAME} github ile giriş yap butonu`}
+                  />
                   Github ile devam et
                 </Button>
                 <Button
@@ -88,6 +90,12 @@ export function LoginForm() {
                   type="button"
                   disabled={isPending}
                 >
+                  <Image
+                    src={"/logos/google.svg"}
+                    width={20}
+                    height={20}
+                    alt={`${process.env.NEXT_PUBLIC_COMPANY_NAME} google ile giriş yap butonu`}
+                  />
                   Google ile devam et
                 </Button>
               </div>
