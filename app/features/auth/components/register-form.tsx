@@ -87,7 +87,17 @@ export function RegisterForm() {
                   type="button"
                   disabled={isPending}
                 >
-                  <Image src={'/logos/github.svg'} width={20} height={20} alt="Niltek yazılım github ile giriş yap butonu" />
+                  <Image
+                    src={"/logos/github.svg"}
+                    width={20}
+                    height={20}
+                    alt={[
+                      process.env.NEXT_PUBLIC_COMPANY_NAME?.trim(),
+                      "github ile giriş yap butonu",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                  />
                   Github ile devam et
                 </Button>
                 <Button
@@ -96,7 +106,17 @@ export function RegisterForm() {
                   type="button"
                   disabled={isPending}
                 >
-                  <Image src={'/logos/google.svg'} width={20} height={20} alt="Niltek yazılım google ile giriş yap butonu" />
+                  <Image
+                    src={"/logos/google.svg"}
+                    width={20}
+                    height={20}
+                    alt={[
+                      process.env.NEXT_PUBLIC_COMPANY_NAME?.trim(),
+                      "google ile giriş yap butonu",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                  />
                   Google ile devam et
                 </Button>
               </div>
