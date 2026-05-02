@@ -80,7 +80,7 @@ export function LoginForm() {
                     src={"/logos/github.svg"}
                     width={20}
                     height={20}
-                    alt={`${process.env.NEXT_PUBLIC_COMPANY_NAME} github ile giriş yap butonu`}
+                    alt={`${process.env.NEXT_PUBLIC_COMPANY_NAME ?? "workflow"} github ile giriş yap butonu`}
                   />
                   Github ile devam et
                 </Button>
@@ -94,7 +94,7 @@ export function LoginForm() {
                     src={"/logos/google.svg"}
                     width={20}
                     height={20}
-                    alt={`${process.env.NEXT_PUBLIC_COMPANY_NAME} google ile giriş yap butonu`}
+                    alt={`${process.env.NEXT_PUBLIC_COMPANY_NAME ?? "workflow"} google ile giriş yap butonu`}
                   />
                   Google ile devam et
                 </Button>

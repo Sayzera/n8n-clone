@@ -14,7 +14,7 @@ export const AuthLayout = ({ children }: AuthProps) => {
         >
           <Image
             src={"/logos/logo.svg"}
-            alt={process.env.NEXT_PUBLIC_COMPANY_NAME + " logo görseli"}
+            alt={(process.env.NEXT_PUBLIC_COMPANY_NAME ?? "Workflow" )+ " logo görseli"}
             width={50}
             height={50}
           />{" "}
