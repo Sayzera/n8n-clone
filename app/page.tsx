@@ -44,7 +44,7 @@ const Page = () => {
       protected server componet
       {JSON.stringify(data, null, 2)}
       <Button
-      disabled={testAi.isPending}
+      disabled={create.isPending}
         onClick={() => {
           create.mutate();
         }}
@@ -53,6 +53,7 @@ const Page = () => {
       </Button>
 
       <Button
+      disabled={testAi.isPending}
        onClick={() => {
         testAi.mutate()
        }}
