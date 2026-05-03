@@ -1,43 +1,22 @@
-import prisma from "@/lib/db";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { generateText } from "ai";
 
 import { inngest } from "./client";
 
-export const processTask = inngest.createFunction(
+const google = createGoogleGenerativeAI();
+export const execute = inngest.createFunction(
   {
-    id: "process-task",
-    triggers: { event: "app/task.created" },
+    id: "execute-ai",
+    triggers: { event: "execute/ai" },
   },
   async ({ event, step }) => {
+    // This calls `generateText` with the given arguments, adding AI observability,
+    // metrics, datasets, and monitoring to your calls.
+    const { steps } = await step.ai.wrap("Sezer", generateText, {
+      model: google("gemini-2.5-flash"),
+      prompt: "Test 123"
+    });
 
-    // Fetching the video
-    await step.sleep("wait-a-moment","5s")
-    // Transcribing
-    await step.sleep("wait-a-moment","5s")
-    // Sending transcription to AI
-    await step.sleep("wait-a-moment", "5s")
-
-    await step.run("create-workflow", () => {
-      return prisma.workflow.create({
-        data: {
-          name: 'test-workflow'
-        }
-      })
-    })
-
-
-    return {
-      success: true, message: 'Job queued'
-    }
-
-    // console.log("test");
-    // const result = await step.run("handle-task", async () => {
-    //   console.log("Hello world");
-    //   return { processed: true, id: event.data.id };
-    // });
-
-    // await step.sleep("pause", "1s");
-    // console.log("Hello worl2");
-
-    // return { message: `Task ${event.data.id} complete`, result };
+    return steps;
   },
 );
