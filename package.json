@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -13,6 +13,8 @@
     "dev:all": "mprocs"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.67",
+    "@ai-sdk/openai": "^3.0.58",
     "@base-ui/react": "^1.4.1",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/adapter-pg": "^7.5.0",
@@ -21,6 +23,7 @@
     "@trpc/client": "^11.14.1",
     "@trpc/server": "^11.14.1",
     "@trpc/tanstack-react-query": "^11.14.1",
+    "ai": "^6.0.174",
     "better-auth": "^1.6.5",
     "class-variance-authority": "^0.7.1",
     "client-only": "^0.0.1",
